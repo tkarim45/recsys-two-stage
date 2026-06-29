@@ -17,7 +17,7 @@ contribution* — the senior signal.
 | Stage | Model | Job |
 |---|---|---|
 | **1 — retrieval** | Truncated-SVD user/item embeddings | score all items, keep top-N candidates (cheap, high recall) |
-| **2 — ranking** | LightGBM classifier | re-score the N candidates on svd-score + popularity + **category affinity** + activity (precise) |
+| **2 — ranking** | LightGBM classifier | re-score the N candidates on svd-score + popularity + **category affinity** + activity + item quality (precise) |
 | baseline | popularity | the bar both stages must clear |
 
 ---
@@ -71,7 +71,7 @@ data.py       synthetic implicit feedback (users × items, category prefs, power
    │  leave-last-out split
 retrieval.py  SVD embeddings → top-N candidates   (+ popularity baseline)
    │
-ranking.py    LightGBM on [svd_score, log_pop, category_affinity, user_activity]
+ranking.py    LightGBM on [svd_score, log_pop, category_affinity, user_activity, quality]
    │
 pipeline.py   recommend(user, method) + evaluate() → Recall@k · NDCG@k · MAP@k leaderboard
    │
