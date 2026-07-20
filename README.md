@@ -1,14 +1,14 @@
-# 🎯 Two-Stage Recommender — retrieval → ranking
+# 🎯 Two-Stage Recommender: retrieval → ranking
 
 > A production-shaped recommender: **stage 1** retrieves candidates with matrix-factorization
 > embeddings, **stage 2** re-ranks them with a LightGBM model on richer features. Evaluated
 > offline with **Recall@k / NDCG@k / MAP@k** on a leave-last-out split, against a popularity
-> baseline — so the **lift from each stage is explicit**. Self-contained synthetic data; runs offline.
+> baseline, so the **lift from each stage is explicit**. Self-contained synthetic data; runs offline.
 
 Real recommenders are two-stage for a reason: retrieval narrows millions of items to a few
 hundred cheaply; ranking spends a heavier model only on those. Most junior portfolios stop
 at "cosine similarity top-k." This does the full pipeline *and measures each stage's
-contribution* — the senior signal.
+contribution*, the senior signal.
 
 ---
 
@@ -16,8 +16,8 @@ contribution* — the senior signal.
 
 | Stage | Model | Job |
 |---|---|---|
-| **1 — retrieval** | Truncated-SVD user/item embeddings | score all items, keep top-N candidates (cheap, high recall) |
-| **2 — ranking** | LightGBM classifier | re-score the N candidates on svd-score + popularity + **category affinity** + activity + item quality (precise) |
+| **1, retrieval** | Truncated-SVD user/item embeddings | score all items, keep top-N candidates (cheap, high recall) |
+| **2, ranking** | LightGBM classifier | re-score the N candidates on svd-score + popularity + **category affinity** + activity + item quality (precise) |
 | baseline | popularity | the bar both stages must clear |
 
 ---
@@ -36,10 +36,10 @@ svd                0.1405    0.0690   0.0477
 two_stage          0.1065    0.0502   0.0335
 ```
 
-The headline: **both personalized systems crush the popularity baseline** — SVD retrieval
+The headline: **both personalized systems crush the popularity baseline**. SVD retrieval
 ~1.9× Recall@10, the two-stage system ~1.4×. The honest read: on this *synthetic,
 co-occurrence-only* dataset the SVD signal is so strong that single-stage retrieval is
-near-optimal and the learned ranker can't beat it — the ranker pays off in production where
+near-optimal and the learned ranker can't beat it, the ranker pays off in production where
 stage 2 sees features retrieval can't (price, recency, live CTR, margin, context). The
 architecture and the rigorous leave-last-out eval are the point; the numbers are reported
 straight, not cherry-picked.
@@ -48,7 +48,7 @@ straight, not cherry-picked.
 
 ## Quickstart
 
-> Uses the conda **`personal`** env (per environment conventions — never `base`).
+> Uses the conda **`personal`** env (per environment conventions, never `base`).
 
 ```bash
 PY=~/miniconda3/envs/personal/bin/python
@@ -100,8 +100,8 @@ recsys-two-stage/
 
 ## Résumé framing
 
-> *Built a two-stage recommender — matrix-factorization candidate retrieval + a LightGBM
-> ranker on affinity/popularity features — evaluated offline with Recall@k/NDCG@k/MAP@k on a
+> *Built a two-stage recommender, matrix-factorization candidate retrieval + a LightGBM
+> ranker on affinity/popularity features, evaluated offline with Recall@k/NDCG@k/MAP@k on a
 > leave-last-out split where retrieval beat the popularity baseline and ranking added lift;
 > served via a /recommend API.*
 
