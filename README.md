@@ -12,6 +12,13 @@ contribution*, the senior signal.
 
 ---
 
+
+## Architecture
+
+![architecture](docs/assets/architecture.png)
+
+*Interactive/exportable version: [`docs/assets/architecture.html`](docs/assets/architecture.html).*
+
 ## The two stages
 
 | Stage | Model | Job |
